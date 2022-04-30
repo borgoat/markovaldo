@@ -77,7 +77,7 @@ internal class MarkovChainTest {
             token_il_cappone_e_un_gallo to ProbabilityDistribution(Random, listOf(WeightedItem("grasso", 1u))),
         ))
 
-        val x = markovChain.generateSentence(token_il)
+        val x = markovChain.generateSentence(token_il, StringBuilder("il"))
         assertEquals("il cappone è un gallo grasso", x)
     }
 }
