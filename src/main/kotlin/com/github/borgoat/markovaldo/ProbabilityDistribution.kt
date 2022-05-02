@@ -7,7 +7,7 @@ class ProbabilityDistribution<T>(
     private val random: Random,
     items: List<WeightedItem<T>>,
 ) {
-    // We put items with the  highest weight first, to optimise the linear search for most likely outcomes
+    // We put items with the highest weight first, to optimise the linear search for most likely outcomes
     private val sortedItems = items.sortedDescending()
     private val total = items.map { it.weigth }.reduce { acc, weight -> acc + weight }
 
