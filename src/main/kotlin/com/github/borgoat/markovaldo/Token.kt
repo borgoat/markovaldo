@@ -3,8 +3,8 @@ package com.github.borgoat.markovaldo
 sealed class Token
 
 data class StringToken(val string: String) : Token() {
-    fun skipSpaceAfter() = noSpaceAfter.matches(string)
-    fun skipSpaceBefore() = noSpaceBefore.matches(string)
+    val skipSpaceAfter = noSpaceAfter.matches(string)
+    val skipSpaceBefore = noSpaceBefore.matches(string)
 
     companion object {
         private val noSpaceAfter = "^([\"]+|\\-\\-)\$".toRegex()
@@ -25,8 +25,8 @@ fun formatTokens(tokens: List<Token>): String {
         if (it is MarkerToken) return@forEach
         it as StringToken
 
-        if (!previousSkipsSpaceAfter && !it.skipSpaceBefore()) stringBuilder.append(' ')
-        previousSkipsSpaceAfter = it.skipSpaceAfter()
+        if (!previousSkipsSpaceAfter && !it.skipSpaceBefore) stringBuilder.append(' ')
+        previousSkipsSpaceAfter = it.skipSpaceAfter
 
         stringBuilder.append(it.string)
     }
