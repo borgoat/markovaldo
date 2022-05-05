@@ -28,12 +28,10 @@ class MarkovChain(
       val tokenState = ArrayDeque<Token>()
       tokens.forEach {
         if (tokenState.isNotEmpty()) {
-          val innerMap = probs.getOrPut(tokenState) { mutableMapOf() }
+          val innerMap = probs.getOrPut(tokenState.takeLast(order)) { mutableMapOf() }
           innerMap.getOrPut(it) { AtomicLong(0) }.incrementAndGet()
         }
-
         tokenState.add(it)
-        if (tokenState.count() > order) tokenState.removeFirst()
       }
     }
 
