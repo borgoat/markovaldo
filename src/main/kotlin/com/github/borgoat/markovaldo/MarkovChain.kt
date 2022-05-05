@@ -19,8 +19,7 @@ class MarkovChain(
 
   fun nextToken(tokenSequence: List<Token>): Token? = edges[tokenSequence.takeLast(order)]?.next()
 
-  class Builder(val scanner: Scanner = Scanner()) {
-    var order = 3
+  class Builder(val scanner: Scanner = Scanner(), val order: Int = 3) {
     val probs = mutableMapOf<List<Token>, MutableMap<Token, AtomicLong>>()
 
     fun add(text: CharSequence) {

@@ -7,8 +7,8 @@ data class StringToken(val string: String) : Token() {
     val skipSpaceBefore = noSpaceBefore.matches(string)
 
     companion object {
-        private val noSpaceAfter = "^([\"]+|\\-\\-)\$".toRegex()
-        private val noSpaceBefore = "^[\\.!?,:\\-]+\$".toRegex()
+        private val noSpaceAfter = "^([\"\']+|\\-\\-)\$".toRegex()
+        private val noSpaceBefore = "^[\"\'\\.!?,:\\-]+\$".toRegex()
     }
 }
 
