@@ -1,6 +1,6 @@
 package com.github.borgoat.markovaldo
 
-const val INIT_ACC = ""
+private const val INIT_ACC = ""
 private val PUNCTUATION = setOf('.', ',', '!', ':', ';', '"', '\'', '.', '-')
 
 class Scanner {

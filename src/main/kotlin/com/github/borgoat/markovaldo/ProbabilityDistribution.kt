@@ -4,7 +4,7 @@ import kotlin.random.Random
 import kotlin.random.nextULong
 
 class ProbabilityDistribution<T>(
-    private val random: Random,
+    private val random: Random = Random,
     items: List<WeightedItem<T>>,
 ) {
     // We put items with the highest weight first, to optimise the linear search for most likely outcomes
