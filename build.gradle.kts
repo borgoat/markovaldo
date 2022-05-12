@@ -14,6 +14,9 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+
+    // For cross-platform atomic values
+    implementation("org.jetbrains.kotlinx:atomicfu:0.17.2")
 }
 
 tasks.test {

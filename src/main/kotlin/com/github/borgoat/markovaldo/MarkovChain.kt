@@ -1,7 +1,9 @@
 package com.github.borgoat.markovaldo
 
+import kotlinx.atomicfu.AtomicLong
+import kotlinx.atomicfu.atomic
+
 // TODO Multiplatform - see https://github.com/Kotlin/kotlinx.atomicfu
-import java.util.concurrent.atomic.AtomicLong
 
 class MarkovChain(
     private val order: Int = 3,
@@ -20,7 +22,7 @@ class MarkovChain(
   fun nextToken(tokenSequence: List<Token>): Token? = edges[tokenSequence.takeLast(order)]?.next()
 
   class Builder(val scanner: Scanner = Scanner(), val order: Int = 3) {
-    val probs = mutableMapOf<List<Token>, MutableMap<Token, AtomicLong>>()
+    private val probs = mutableMapOf<List<Token>, MutableMap<Token, AtomicLong>>()
 
     fun add(text: CharSequence) {
       val tokens = scanner.scanTokens(text)
@@ -28,7 +30,7 @@ class MarkovChain(
       tokens.forEach {
         if (tokenState.isNotEmpty()) {
           val innerMap = probs.getOrPut(tokenState.takeLast(order)) { mutableMapOf() }
-          innerMap.getOrPut(it) { AtomicLong(0) }.incrementAndGet()
+          innerMap.getOrPut(it) { atomic(0L) }.incrementAndGet()
         }
         tokenState.add(it)
       }
@@ -40,7 +42,7 @@ class MarkovChain(
     }
 
     private fun generateProbabilityDistribution(map: Map<Token, AtomicLong>): ProbabilityDistribution<Token> {
-      val list = map.map { WeightedItem(it.key, it.value.toLong().toULong()) }
+      val list = map.map { WeightedItem(it.key, it.value.value.toULong()) }
       return ProbabilityDistribution(items = list)
     }
   }
