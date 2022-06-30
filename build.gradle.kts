@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.0"
     id("maven-publish")
 }
 
@@ -16,7 +16,7 @@ dependencies {
     testImplementation(kotlin("test"))
 
     // For cross-platform atomic values
-    implementation("org.jetbrains.kotlinx:atomicfu:0.17.2")
+    implementation("org.jetbrains.kotlinx:atomicfu:0.18.0")
 }
 
 tasks.test {
