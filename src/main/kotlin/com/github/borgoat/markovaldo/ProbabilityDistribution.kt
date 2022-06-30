@@ -1,15 +1,24 @@
 package com.github.borgoat.markovaldo
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlin.random.Random
 import kotlin.random.nextULong
 
-class ProbabilityDistribution<T>(
-    private val random: Random = Random,
-    items: List<WeightedItem<T>>,
+@Serializable
+class ProbabilityDistribution<T> private constructor(
+    @Transient private val random: Random = Random,
+    private val sortedItems: List<WeightedItem<T>>,
+    private val total: ULong,
 ) {
-    // We put items with the highest weight first, to optimise the linear search for most likely outcomes
-    private val sortedItems = items.sortedDescending()
-    private val total = items.map { it.weigth }.reduce { acc, weight -> acc + weight }
+    constructor(
+        random: Random = Random,
+        items: List<WeightedItem<T>>
+    ) : this(
+        random = random,
+        sortedItems = items.sortedDescending(),
+        total = items.map { it.weigth }.reduce { acc, weight -> acc + weight },
+    )
 
     operator fun next(): T {
         val x = random.nextULong(total)

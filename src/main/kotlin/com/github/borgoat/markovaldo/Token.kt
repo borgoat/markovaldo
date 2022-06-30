@@ -1,7 +1,11 @@
 package com.github.borgoat.markovaldo
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 sealed class Token
 
+@Serializable
 data class StringToken(val string: String) : Token() {
     val skipSpaceAfter = noSpaceAfter.matches(string)
     val skipSpaceBefore = noSpaceBefore.matches(string)
@@ -16,7 +20,8 @@ enum class MarkerType {
     BEGIN, END,
 }
 
-data class MarkerToken(val type: MarkerType) : Token()
+@Serializable
+data class MarkerToken(val markerType: MarkerType) : Token()
 
 fun formatTokens(tokens: List<Token>): String {
     val stringBuilder = StringBuilder()
